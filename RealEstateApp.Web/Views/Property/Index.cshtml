@@ -1,0 +1,68 @@
+﻿@model IEnumerable<RealEstateApp.Web.Models.PropertyModel>
+@{
+    ViewBag.Title = "Properties List";
+}
+
+<h2>@ViewBag.Title</h2>
+<table class="table table-content table-striped table-responsive">
+    <thead style="background-color:black;" class="text-white bac">
+        <tr>
+            <th>
+                Reference
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                Owner
+            </th>
+            <th>
+                @*<a href="@Url.Action("Create")" class="text-success text-decoration-none">
+                    <i class="fa-plus-circle"></i>
+                </a>*@
+                @Html.ActionLink("Create", "Create")
+
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @if (Model != null && Model.Count() > 0)
+        {
+            foreach (var p in Model)
+            {
+                <tr>
+                    <td>
+                        @p.Reference
+                    </td>
+                    <td>
+                        @p.Name
+                    </td>
+                    <td>
+                        @p.Price.ToString("N0")
+                    </td>
+                    <td>
+                        @p.Owner.Name
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit | ", "Edit", new { Id = p.Id })
+                        @Html.ActionLink("Delete", "Delete", new { Id = p.Id })
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="4">
+                    <em>
+                        Property not found !
+                    </em>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
