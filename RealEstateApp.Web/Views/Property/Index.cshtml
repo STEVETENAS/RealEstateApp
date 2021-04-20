@@ -49,7 +49,9 @@
                     </td>
                     <td>
                         @Html.ActionLink("Edit | ", "Edit", new { Id = p.Id })
-                        @Html.ActionLink("Delete", "Delete", new { Id = p.Id })
+                        <a href="@Url.Action("Delete",new { Id = p.Id })" class="text-danger text-decoration-none">
+                            <i class="glyphicon glyphicon-trash"></i>Delete
+                        </a>
                     </td>
                 </tr>
             }

@@ -88,15 +88,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Entities\Model1.Context.tt">
+    <Content Include="Entities\RealEstateApp.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
-      <DependentUpon>Model1.edmx</DependentUpon>
+      <DependentUpon>RealEstateApp.edmx</DependentUpon>
+      <LastGenOutput>RealEstateApp.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Entities\Model1.tt">
+    <Content Include="Entities\RealEstateApp.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.cs</LastGenOutput>
+      <DependentUpon>RealEstateApp.edmx</DependentUpon>
+      <LastGenOutput>RealEstateApp.cs</LastGenOutput>
     </Content>
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
@@ -107,26 +107,26 @@
     <Compile Include="Controllers\OwnerController.cs" />
     <Compile Include="Controllers\PropertyController.cs" />
     <Compile Include="Controllers\TestController.cs" />
-    <Compile Include="Entities\Model1.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\Model1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\Model1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Entities\Owner.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>RealEstateApp.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\Property.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>RealEstateApp.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\RealEstateApp.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RealEstateApp.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\RealEstateApp.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RealEstateApp.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\RealEstateApp.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RealEstateApp.edmx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -134,12 +134,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="Entities\Model1.edmx">
+    <EntityDeploy Include="Entities\RealEstateApp.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+      <LastGenOutput>RealEstateApp.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Entities\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
+    <Content Include="Entities\RealEstateApp.edmx.diagram">
+      <DependentUpon>RealEstateApp.edmx</DependentUpon>
     </Content>
     <None Include="packages.config" />
     <None Include="Web.Debug.config">

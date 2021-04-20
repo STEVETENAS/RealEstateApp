@@ -142,13 +142,13 @@ namespace RealEstateApp.Web.Controllers
             return View(model);
         }
 
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> Delete(int Id)
         {
             using (HttpClient client = new HttpClient())
             {
                 var responce = await client.DeleteAsync
                     (
-                        "http://localhost/RealEstateAPI/API/Property?Id=" + id
+                        "http://localhost/RealEstateAPI/API/Property?Id=" + Id
                     );
             }
             return RedirectToAction("Index");

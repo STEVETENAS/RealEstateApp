@@ -13,10 +13,10 @@ namespace RealEstateApp.API.Entities
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class Entities : DbContext
+    public partial class RealEstateDBEntities : DbContext
     {
-        public Entities()
-            : base("name=Entities")
+        public RealEstateDBEntities()
+            : base("name=RealEstateDBEntities")
         {
         }
     

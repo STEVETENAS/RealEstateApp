@@ -1,10 +1,10 @@
 ﻿@model RealEstateApp.Web.Models.PropertyModel
 @{
-    ViewBag.Titel = "Create property";
+    ViewBag.Title = "Create property";
 }
 
 <h2>@ViewBag.Title</h2>
-@using (Html.BeginForm("Create", "Property", null))
+@using (Html.BeginForm("Create", "Property", null,FormMethod.Get))
 {
     <div class="text-danger">
         @Html.ValidationSummary(true)
@@ -44,7 +44,7 @@
 
             <div class="mb-3">
                 <button type="submit" class="btn btn-success justify-content-center" style="width:50%">
-                    <i class="icon-save"></i>Save
+                    <i class="glyphicon glyphicon-save"></i>Save
                 </button>
             </div>
 
