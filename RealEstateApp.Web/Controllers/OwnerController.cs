@@ -19,7 +19,10 @@ namespace RealEstateApp.Web.Controllers
             IEnumerable<OwnerModel> model = new List<OwnerModel>();
             using (HttpClient client = new HttpClient())
             {
-                var response = await client.GetAsync("http://localhost/RealEstateAPI/api/Owner");
+                var response = await client.GetAsync
+                    (
+                        "http://localhost/RealEstateAPI/api/Owner"
+                    );
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -29,27 +32,27 @@ namespace RealEstateApp.Web.Controllers
             }
             return View(model);
         }
+
+        public ActionResult Create()
+        {
+            OwnerModel model = new OwnerModel();
+            return View("Edit",model);
+        }
+
         public async Task<ActionResult> Edit(int Id)
         {
             OwnerModel model = new OwnerModel();
             using (HttpClient client = new HttpClient())
             {
-                var response = await client.GetAsync("http://localhost/RealEstateAPI/API/Property?id=" + Id);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    var json = await response.Content.ReadAsStringAsync();
-                    model = JsonConvert.DeserializeObject<OwnerModel>(json);
-                }
-
-                response = await client.GetAsync(
-                    "http://localhost/RealEstateAPI/API/Owner"
+                var response = await client.GetAsync
+                    (
+                        "http://localhost/RealEstateAPI/API/Owner?Id=" + Id
                     );
 
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
-                    var owners = JsonConvert.DeserializeObject<IEnumerable<OwnerModel>>(json);
+                    model = JsonConvert.DeserializeObject<OwnerModel>(json);
                 }
             }
             return View(model);
@@ -76,17 +79,16 @@ namespace RealEstateApp.Web.Controllers
                         if (model.Id == 0)
                             response = await client.PostAsync
                                 (
-                                    "http://localhost/RealEstateAPI/API/Property",
+                                    "http://localhost/RealEstateAPI/API/Owner",
                                     content
                                 );
                         else
                             response = await client.PutAsync
                                 (
-                                    "http://localhost/RealEstateAPI/API/Property",
+                                    "http://localhost/RealEstateAPI/API/Owner",
                                     content
 
                                 );
-
                     }
                     return RedirectToAction("Index");
                 }
@@ -98,13 +100,13 @@ namespace RealEstateApp.Web.Controllers
             return View(model);
         }
 
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> Delete(int Id)
         {
             using (HttpClient client = new HttpClient())
             {
                 var responce = await client.DeleteAsync
                     (
-                        "http://localhost/RealEstateAPI/API/Property?id=" + id
+                        "http://localhost/RealEstateAPI/API/Owner?Id=" + Id
                     );
             }
             return RedirectToAction("Index");

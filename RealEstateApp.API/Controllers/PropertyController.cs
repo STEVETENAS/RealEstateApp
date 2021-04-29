@@ -11,49 +11,77 @@ namespace RealEstateApp.API.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> Get()
         {
-            return Ok(await db.Properties.ToArrayAsync());
+            try
+            {
+                return Ok(await db.Properties.ToArrayAsync());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet]
-        public async Task<IHttpActionResult> Details(int id)
+        public async Task<IHttpActionResult> Details(int Id)
         {
-            return Ok(await db.Properties.FindAsync(id));
+            try
+            {
+             return Ok(await db.Properties.FindAsync(Id));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost]
         public async Task<IHttpActionResult> Post([FromBody] Property item)
         {
-            item.CreatedDate = DateTime.Now;
-            db.Properties.Add(item);
-            await db.SaveChangesAsync();
+            try
+            {
+                item.CreatedDate = DateTime.Now;
+                db.Properties.Add(item);
+                await db.SaveChangesAsync();
 
-            return Ok(item);
+                return Ok(item);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut]
         public async Task<IHttpActionResult> Put([FromBody] Property item)
         {
-            var oldItem = await db.Properties.AsNoTracking().FirstOrDefaultAsync(x => x.Id == item.Id);
-            if (oldItem != null)
+            try
             {
-                item.CreatedDate = oldItem.CreatedDate;
-                db.Entry(item).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                var oldItem = await db.Properties.AsNoTracking().FirstOrDefaultAsync(x => x.Id == item.Id);
+                if (oldItem != null)
+                {
+                    item.CreatedDate = oldItem.CreatedDate;
+                    db.Entry(item).State = EntityState.Modified;
+                    await db.SaveChangesAsync();
+                }
+                return Ok(item);
             }
-            return Ok(item);
+            catch (Exception ex) { return BadRequest(ex.Message); }
         }
 
 
         [HttpDelete]
-        public async Task<IHttpActionResult> Delete(int id)
-        {
-            var item = await db.Properties.FindAsync(id);
-            if (item != null)
+        public async Task<IHttpActionResult> Delete(int Id)
+        {try
             {
-                db.Properties.Remove(item);
-                await db.SaveChangesAsync();
+                var item = await db.Properties.FindAsync(Id);
+                if (item != null)
+                {
+                    db.Properties.Remove(item);
+                    await db.SaveChangesAsync();
+                }
+                return Ok(item);
             }
-            return Ok(item);
+            catch (Exception ex) { return BadRequest(ex.Message); }
         }
 
     }

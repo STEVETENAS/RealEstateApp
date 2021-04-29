@@ -1,9 +1,10 @@
 ﻿@model IEnumerable<RealEstateApp.Web.Models.OwnerModel>
 @{
-    ViewBag.Title = "Properties List";
+    ViewBag.Title = "Owners List";
 }
 
 <h2>@ViewBag.Title</h2>
+
 <table class="table table-content table-striped table-responsive">
     <thead style="background-color:black;" class="text-white bac">
         <tr>
@@ -17,10 +18,10 @@
                 Telephone
             </th>
             <th>
-                @*<a href="@Url.Action("Create")" class="text-success text-decoration-none">
-                        <i class="fa-plus-circle"></i>
-                    </a>*@
-                @Html.ActionLink("Create", "Create")
+                <a href="@Url.Action("Create")" class="text-success text-decoration-none justify-content-center">
+                    <i class="glyphicon glyphicon-plus-sign ml-2"></i>Create
+                </a>
+                @*@Html.ActionLink("Create", "Create")*@
 
             </th>
         </tr>
@@ -43,7 +44,9 @@
                     </td>
                     <td>
                         @Html.ActionLink("Edit | ", "Edit", new { Id = p.Id })
-                        @Html.ActionLink("Delete", "Delete", new { Id = p.Id })
+                        <a href="@Url.Action("Delete", new { Id = p.Id })" class="text-danger text-decoration-none justify-content-center">
+                            <i class="glyphicon glyphicon-plus-trash"></i>Delete
+                        </a>
                     </td>
                 </tr>
             }

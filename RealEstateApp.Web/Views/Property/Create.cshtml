@@ -3,8 +3,10 @@
     ViewBag.Title = "Create property";
 }
 
-<h2>@ViewBag.Title</h2>
-@using (Html.BeginForm("Create", "Property", null,FormMethod.Get))
+<div class="row justify-content-center">
+    <h2>@ViewBag.Title</h2>
+</div>
+@using (Html.BeginForm("Create", "Property", null, FormMethod.Get))
 {
     <div class="text-danger">
         @Html.ValidationSummary(true)

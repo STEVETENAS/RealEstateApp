@@ -6,7 +6,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
 namespace RealEstateApp.Web.Controllers
@@ -38,9 +37,9 @@ namespace RealEstateApp.Web.Controllers
             using (HttpClient client = new HttpClient())
             {
                 var response = await client.GetAsync
-                    (
-                    "http://localhost/RealEstateAPI/API/Owner"
-                    );
+                (
+                     "http://localhost/RealEstateAPI/API/Owner"
+                );
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -57,7 +56,7 @@ namespace RealEstateApp.Web.Controllers
                         );
                 }
             }
-            return View(model);
+            return View("Edit",model);
         }
 
         public async Task<ActionResult> Edit(int Id)
@@ -67,7 +66,7 @@ namespace RealEstateApp.Web.Controllers
             {
                 var response = await client.GetAsync
                     (
-                        "http://localhost/RealEstateAPI/API/Property?id=" + Id
+                        "http://localhost/RealEstateAPI/API/Property?Id=" + Id
                     );
 
                 if (response.IsSuccessStatusCode)
@@ -76,8 +75,9 @@ namespace RealEstateApp.Web.Controllers
                     model = JsonConvert.DeserializeObject<PropertyModel>(json);
                 }
 
-                response = await client.GetAsync(
-                    "http://localhost/RealEstateAPI/API/Owner"
+                response = await client.GetAsync 
+                    (
+                        "http://localhost/RealEstateAPI/API/Owner"
                     );
 
                 if (response.IsSuccessStatusCode)
@@ -104,17 +104,38 @@ namespace RealEstateApp.Web.Controllers
         {
             try
             {
+                using (HttpClient client = new HttpClient())
+                {
+                    var response = await client.GetAsync(
+                        "http://localhost/RealEstateAPI/API/Owner"
+                        );
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var json = await response.Content.ReadAsStringAsync();
+                        var owners = JsonConvert.DeserializeObject<IEnumerable<OwnerModel>>(json);
+                        model.Owners = owners.Select
+                        (
+                            x =>
+                            new SelectListItem
+                            {
+                                Text = x.Name,
+                                Value = x.Id.ToString()
+                            }
+                        );
+                    }
+                }
+
                 if (ModelState.IsValid)
                 {
                     var json = JsonConvert.SerializeObject(model);
                     StringContent content = new StringContent
-                        (
-                            json,
-                            Encoding.UTF8,
-                            "application/json"
-                        );
+                    (
+                        json,
+                        Encoding.UTF8,
+                        "application/json"
+                    );
 
-                    using (HttpClient client = new HttpClient())
+                    using(HttpClient client = new HttpClient())
                     {
                         HttpResponseMessage response;
                         if (model.Id == 0)
@@ -128,13 +149,11 @@ namespace RealEstateApp.Web.Controllers
                                 (
                                     "http://localhost/RealEstateAPI/API/Property",
                                     content
-
                                 );
-
                     }
                     return RedirectToAction("Index");
                 }
-            }
+             }
             catch (Exception ex)
             {
                 ModelState.AddModelError("", ex.Message);
@@ -155,3 +174,138 @@ namespace RealEstateApp.Web.Controllers
         }
     }
 }
+
+
+/* 
+    Create() 
+    {
+        ProductModel model = ProductModel();
+        using(HttpClient client = new HttpClient())
+        {
+            var response = await client.GetAsync
+            (
+                "http://localhost/RealEstateAPI/API/Owner"
+            );
+            if(response.IsSuccessStatusCode)
+            {
+                var json = await response.Content.ReadAsStringAsync();
+                var owner = JsonConvert.DeserializeObject<IEnumerable<Propertymodel>>(json);
+                model.Owners = owners.Select
+                (
+                    x =>
+                    new SelectListitem
+                    {
+                        Text = x.Name,
+                        Value = x.Id.ToString()
+                    }
+                };
+            }
+            return View("Edit",model);
+    }
+
+
+        public async Task<ActionResult> Edit(int Id)
+        {
+            PropertyModel model = new PropertyModel();
+            using (HttpClient client = new HttpClient())
+            {
+                var response = await client.GetAsync
+                    (
+                        "http://localhost/RealEstateAPI/API/Product?Id=" + Id
+                    );
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+                    model = JsonConvert.DeserializeObject<PropertyModel>(json);
+                }
+
+                response = await client.GetAsync
+                (
+                    "http://localhost/RealEstateAPI/API/Owner"
+                );
+                
+                if(response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+                    var owner = JsonConvert.DeserializeObject<IEnumerable<OwnerModel>>(json);
+                    model.Owners = owner.Select
+                    (
+                        x =>
+                        new SelectListItem
+                        {
+                            Text = x.Name,
+                            Value = x.Id.ToString(),
+                            Selected = x.Id == model.Owner.Id
+                        }
+                    );
+                }
+            }
+            return View(model);
+        }
+
+
+        public async Task<ActionResult> Edit(OwnerModel model)
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    var response = await client.GetAsync
+                    (
+                      "http://localhost/RealEstateAPI/API/Product"
+                    );
+                    if(response.IsSuccessStatusCode)
+                    {
+                        var json = await response.Content.ReadAsStringAsync();
+                        var owner = jsonConvert.DeserializeObject<Ienumerable<OwnerModel>>(json);
+                        model.Owners = owner.Select
+                        (
+                            x =>
+                            new SelectListItem
+                            {
+                                Text = x.Name,
+                                Value = x.Id.ToString()
+                            }
+                        );
+                    }
+
+                 }   
+                
+                if (ModelState.isValid)
+                {
+                    var json =  JsonConvert.SerializeObject(model);
+                    StringContent content = new StringContent
+                    (
+                        json,
+                        Encoding.UTF8,
+                        "application/json"
+                    );
+
+                    using(HttpClient client = new HttpClient())
+                    {
+                        HttpResponseMessage response;
+                        if(model.Id == 0)
+                            response = await client.PostAsync
+                            (
+                                "http://localhost/RealEstateAPI/API/Product",
+                                 content
+                            );       
+                        else
+                            response = await client.PutAsync
+                            (
+                                "http://localhost/RealEstateAPI/API/Product",
+                                 content
+                            );
+                    }
+                    return RedirectToAction("Index");
+                }
+            }
+            catch(Exeception ex)
+            {
+                ModelState.AddModelError("",ex.Message);
+            }
+            return View(model);
+        }
+
+*/

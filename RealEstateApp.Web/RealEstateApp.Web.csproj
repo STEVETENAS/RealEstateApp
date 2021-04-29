@@ -256,6 +256,8 @@
     <Content Include="Views\Property\Index.cshtml" />
     <Content Include="Views\Property\Create.cshtml" />
     <Content Include="Views\Owner\Index.cshtml" />
+    <Content Include="Views\Owner\Edit.cshtml" />
+    <Content Include="Views\Owner\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
